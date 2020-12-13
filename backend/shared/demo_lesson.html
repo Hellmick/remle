@@ -1,0 +1,156 @@
+<script>
+
+function replacePow(strBegin, str)
+        {
+            console.log('XD?');
+            pos = strBegin+1;
+            val1 = '';
+            val2 = '';
+            while(str.charAt(pos)!='}' && pos<str.length)
+            {
+                val1 += str.charAt(pos);
+                pos++;
+            }
+            pos+=3;
+            while(str.charAt(pos)!='}' && pos<str.length)
+            {
+                val2 += str.charAt(pos);
+                pos++;
+            }
+            console.log(val1+'<sup>'+val2+'</sup>');
+            return val1+'<sup>'+val2+'</sup>';
+        }
+
+function updateEquation(target)
+        {
+            html = target.value.replace(/(?:\r\n|\r|\n)/g, '<br>').replace(/~~/g,'&asymp;');
+
+            
+            while(html.search(/{[-+., /0-9a-zA-z]+}\^{[-+., /0-9a-zA-z]+}/)!=-1)
+            {
+                html = html.replace(/{[-+., /0-9a-zA-z]+}\^{[-+., /0-9a-zA-z]+}/,replacePow(html.search(/{[-+., /0-9a-zA-z]+}\^{[-+., /0-9a-zA-z]+}/), html));
+            }
+
+            target.nextSibling.innerHTML = html;
+        }
+        
+
+        
+</script>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
+section
+{
+    width: 70%; 
+    height:80%; 
+    margin-left: 15%;
+    font-family: 'Lato', sans-serif;
+}
+
+.taskSign {
+    font-size: 20px;
+    padding: 10px 20px;
+    background-color: #000164;
+    border-radius: 40px;
+    color: #ddd;
+    display: inline-block;
+    margin-left: 70px;
+}
+
+.taskDesc {
+    margin-top: 20px;
+    margin-bottom: 60px;
+    text-align: center;
+    font-size: 18px;
+}
+
+textarea {
+    display: block; 
+    width: 65%; 
+    height: 250px;
+    margin-left: 5%;
+    background-color: #999;
+    resize: none;
+    border: 3px solid #555;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 15px;
+}
+
+textarea:focus {
+    outline: none !important;
+    border: 3px solid #111;
+    background-color: #888;
+}
+
+.eq {
+    display: block; 
+    width: 65%;
+    height: 250px;
+    margin-right: 5%;
+    background-color: #aaa;
+    resize: none;
+    border: 2px solid #666;
+    border-radius: 15px;
+
+}
+
+.send {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    width: 30%;
+    padding: 10px 0;
+    border: 3px solid #000164;
+    border-radius: 30px;
+    font-size: 25px;
+    color: #333;
+    transition: 300ms;
+}
+
+.send:hover {
+    background-color: #000164;
+    color: #ddd;
+    cursor: pointer;
+}
+
+.send:focus {
+    outline: none !important;
+}
+
+</style>
+
+<section>
+    
+    <h4 class='taskSign'>Zadanie 1.</h4>  
+    <p class='taskDesc'>
+        Wiadomo, że 1,5849 jest przybliżeniem liczby 10<sup>0,2</sup>z zaokrągleniem do 4 miejsc po przecinku.<br/> Wyznacz przybliżenie liczby 10<sup>−4/5</sup>z zaokrągleniem do 3 miejsc po przecinku oraz przybliżenie liczby 10<sup>11/5</sup>z zaokrągleniem do 1 miejsca po przecinku
+    </p>
+
+    <div style='display: flex; width: 800pxl; justify-content: space-between;'>
+    <textarea id='ex-1' onkeyup='updateEquation(event.target)'>
+    <!--   
+
+{10}^{0,2} ~~ 1,5849 
+{10}^{-4/5} = {10}^{0,2 - 1} = {10}^{0,2} / 10 ~~ 0,1585
+{10}^{11/5} = {10}^{0,2 + 2} = {10}^{0,2} * 100 ~~ 158,5
+ 
+
+    -->
+    
+    </textarea><div class='eq' style='margin-left: 40px'></div>
+
+    </div>
+
+    <script>
+        updateEquation(document.getElementById('ex-1'));
+
+    </script>
+
+    <button action="#" class="send">Prześlij</button>
+</section>
+
